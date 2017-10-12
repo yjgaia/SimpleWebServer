@@ -1,56 +1,53 @@
-var PORT = 8413;
+let PORT = 8413;
 
-var s = require('http').createServer(handler), fs = require('fs'), path = require('path');
+let FS = require('fs');
+let Path = require('path');
 
-// Server Handler
-function handler(req, res) {
+require('http').createServer((req, res) => {
 
-	var url = req.url;
-	if (url.indexOf('?') !== -1) { // eliminate param.
+	let url = req.url;
+	if (url.indexOf('?') !== -1) {
 		url = url.substring(0, url.indexOf('?'));
 	}
-	if (url === '/') { // root
+	if (url === '/') {
 		url = '/index.html';
 	}
 
-	var filepath = './' + url // 파일 경로
-	, extname = path.extname(filepath) // 확장자
-	, contentType = 'text/html';
-
-	switch (extname) {
-		case '.js':
-			contentType = 'text/javascript';
-			break;
-		case '.css':
-			contentType = 'text/css';
-			break;
-		case '.jpg':
-		case '.jpeg':
-			contentType = 'image/jpeg';
-			break;
-		case '.png':
-			contentType = 'image/png';
-			break;
+	let path = './' + url;
+	let extname = Path.extname(path);
+	let contentType = 'text/html';
+	
+	if (extname === '.js') {
+		contentType = 'application/javascript';
+	} else if (extname === '.css') {
+		contentType = 'text/css';
+	} else if (extname === '.jpg' || extname === '.jpeg') {
+		contentType = 'image/jpeg';
+	} else if (extname === '.png') {
+		contentType = 'image/png';
 	}
-
-	fs.exists(filepath, function(exists) {
-		if (exists) {
-			fs.readFile(filepath, 'binary', function(err, data) {
-				if (err === null) {
+	
+	FS.access(path, (error) => {
+		
+		if (error === null) {
+			FS.readFile(path, 'binary', (error, data) => {
+				if (error === null) {
 					res.writeHead(200, {
 						'Content-Type' : contentType
 					});
 					res.write(data, 'binary');
 					res.end();
-				} else { // 에러 발생
+				} else {
 					res.writeHead(500, {
 						'Content-Type' : 'text/plain'
 					});
-					res.write(err.toString());
+					res.write(error.toString());
 					res.end();
 				}
 			});
-		} else { // 존재하지 않는 자원 접근
+		}
+		
+		else {
 			res.writeHead(404, {
 				'Content-Type' : 'text/plain'
 			});
@@ -58,8 +55,7 @@ function handler(req, res) {
 			res.end();
 		}
 	});
-}
-
-s.listen(PORT);
+	
+}).listen(PORT);
 
 console.log('Started SimpleWebServer! http://localhost:' + PORT);
