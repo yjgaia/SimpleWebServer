@@ -21,6 +21,15 @@ var PORT = 8413;
 node SimpleWebServer.js
 ```
 
+## NPM으로 설치 및 실행
+[NPM](https://www.npmjs.com)으로도 설치 및 실행할 수 있습니다. 단, 이 경우 포트를 변경할 수 없고 기본 포트인 8413 포트를 사용해야 합니다.
+```
+npm install swserver -g
+```
+```
+swserver
+```
+
 ## 라이센스
 [MIT](LICENSE)
 
