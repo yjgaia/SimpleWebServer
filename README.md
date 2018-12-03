@@ -1,7 +1,7 @@
 # SimpleWebServer
 긴급히 웹 서버가 필요할 때 유-용!
 
-파일 하나, 65줄짜리 node.js 기반 코드입니다.
+파일 하나, 85줄짜리 node.js 기반 코드입니다.
 
 ## 제공하는 기능
 * root 경로로 접근 시 index.html 제공

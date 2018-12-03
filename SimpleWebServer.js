@@ -48,11 +48,34 @@ require('http').createServer((req, res) => {
 		}
 		
 		else {
-			res.writeHead(404, {
-				'Content-Type' : 'text/plain'
+			FS.access('./404.html', (error) => {
+				
+				if (error === null) {
+					FS.readFile('./404.html', 'binary', (error, data) => {
+						if (error === null) {
+							res.writeHead(404, {
+								'Content-Type' : contentType
+							});
+							res.write(data, 'binary');
+							res.end();
+						} else {
+							res.writeHead(404, {
+								'Content-Type' : 'text/plain'
+							});
+							res.write('404 Not Found.');
+							res.end();
+						}
+					});
+				}
+				
+				else {
+					res.writeHead(404, {
+						'Content-Type' : 'text/plain'
+					});
+					res.write('404 Not Found.');
+					res.end();
+				}
 			});
-			res.write('404 Not Found.');
-			res.end();
 		}
 	});
 	

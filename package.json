@@ -1,6 +1,6 @@
 {
   "name": "swserver",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "main": "SimpleWebServer.js",
   "bin": {
     "swserver": "./program.js"
