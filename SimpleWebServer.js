@@ -25,6 +25,10 @@ require('http').createServer((req, res) => {
 		contentType = 'image/jpeg';
 	} else if (extname === '.png') {
 		contentType = 'image/png';
+	} else if (extname === '.ogg') {
+		contentType = 'audio/ogg';
+	} else if (extname === '.mp3') {
+		contentType = 'audio/mpeg';
 	}
 	
 	FS.access(path, (error) => {
